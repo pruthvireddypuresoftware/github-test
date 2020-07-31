@@ -1,0 +1,30 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Test
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "test"
+  run-test:
+    name: Testing ralfg images
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version:
+          - "3.6"
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          docker run --rm --privileged hypriot/qemu-register
+      - uses: RalfG/python-wheels-manylinux-build@v0.3-manylinux2014_aarch64
+        with:
+          args: 'bash -c "uname -m"'
