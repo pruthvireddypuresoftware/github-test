@@ -28,5 +28,5 @@ jobs:
       - uses: docker://quay.io/pypa/manylinux2014_aarch64
         with: 
            args: |
-                bash -c "uname -m"
                 bash -c "uname -a"
+                bash -c "uname -m"
