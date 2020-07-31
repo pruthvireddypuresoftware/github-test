@@ -29,6 +29,6 @@ jobs:
            args: |
                 bash -c "uname -m; 
                          REGEX='cp3([0-9])*';
-                         PY_LIMITED_API='--py-limited-api=cp3${BASH_REMATCH[1]}';
+                         if [[ '${{ matrix.PYTHON }}' =~ $REGEX ]]; then PY_LIMITED_API='--py-limited-api=cp3${BASH_REMATCH[1]}' fi;
                          echo $PY_LIMITED_API;"
                          
