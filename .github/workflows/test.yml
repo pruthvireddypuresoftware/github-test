@@ -27,7 +27,8 @@ jobs:
       - uses: docker://quay.io/pypa/manylinux2014_aarch64
         with: 
            args: |
-                bash -c '/opt/python/${{ matrix.PYTHON }}/bin/pip install virtualenv;
+                bash -c "uname -m; 
+                         /opt/python/${{ matrix.PYTHON }}/bin/pip install virtualenv;
                          /opt/python/${{ matrix.PYTHON }}/bin/python -m virtualenv .venv;
-                         .venv/bin/pip install setuptools wheel cffi six;'
+                         .venv/bin/pip install setuptools wheel cffi six;"
                          
