@@ -21,12 +21,23 @@ jobs:
         PYTHON: ["cp36-cp36m"]
       fail-fast: false
     steps:
+      - name: Get python version
+        id: linux-py-version
+        env:
+          py_tag: ${{ matrix.python-version }}
+        # the command `echo "::set-output ...` is used to create an step output that can be used in following steps
+        # this is from https://github.community/t5/GitHub-Actions/Using-the-output-of-run-inside-of-if-condition/td-p/33920
+        run: |
+          version="${py_tag: 2:1}.${py_tag: 3:1}"
+          echo $version
+          echo "::set-output name=python-version::$version"
       - uses: actions/checkout@v2
       - run: |
           docker run --rm --privileged hypriot/qemu-register
       - uses: docker://arm64v8/ubuntu:latest
         with: 
-           args: |
+          python-version: ${{  steps.linux-py-version.outputs.python-version }}
+          args: |
                 bash -c "uname -m; 
                 python -V;"
                          
