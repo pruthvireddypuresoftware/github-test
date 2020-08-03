@@ -28,5 +28,5 @@ jobs:
         with: 
            args: |
                 bash -c "uname -m; 
-                python3 -V;"
+                python -V;"
                          
